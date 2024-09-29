@@ -83,6 +83,8 @@ The `docker-compose.yml` includes:
 ### Environment Variables
 The services are configured to run with the **Moscow timezone (Europe/Moscow)** to ensure accurate time for Jenkins jobs.
 
+---
+
 ## Step 2: Launch Jenkins and Verify NTP Setup
 
 ### 2.1. Use Docker Compose to bring up the Jenkins and NTP services
