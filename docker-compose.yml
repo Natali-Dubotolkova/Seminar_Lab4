@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  jenkins:
+    image: jenkins/jenkins:2.387.2-lts-jdk11  # Specific stable version
+    container_name: jenkins-ci
+    ports:
+      - "8080:8080"  # Jenkins UI
+      - "50000:50000"  # Jenkins agent port
+    volumes:
+      - jenkins_home:/var/jenkins_home  # Persist Jenkins data
+    networks:
+      - ci-network
+    environment:
+      - TZ=Europe/Moscow  # Set timezone to Moscow
+    restart: always
+    user: "1000:1000"  # Run as a non-root user (Jenkins image uses this by default)
+    deploy:
+      resources:
+        limits:
+          memory: 1g  # Set memory limit
+          cpus: "0.5"  # Limit CPU usage
+    security_opt:
+      - no-new-privileges:true  # Prevent privilege escalation inside the container
+
+  ntp:
+    image: cturra/ntp:latest  # NTP image with version
+    container_name: ntp-service
+    restart: always
+    networks:
+      - ci-network
+    environment:
+      - TZ=Europe/Moscow  # Set timezone to Moscow
+    privileged: true  # Required for NTP service to adjust the system clock
+    deploy:
+      resources:
+        limits:
+          memory: 128m  # NTP service requires minimal resources
+          cpus: "0.1"
+    security_opt:
+      - no-new-privileges:true  # Prevent privilege escalation inside the container
+
+networks:
+  ci-network:
+    driver: bridge  # Bridge network for communication
+
+volumes:
+  jenkins_home:
+    driver: local  # Persistent volume to store Jenkins data
