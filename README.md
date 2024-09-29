@@ -82,3 +82,97 @@ The `docker-compose.yml` includes:
 
 ### Environment Variables
 The services are configured to run with the **Moscow timezone (Europe/Moscow)** to ensure accurate time for Jenkins jobs.
+
+## Step 2: Launch Jenkins and Verify NTP Setup
+
+### 2.1. Use Docker Compose to bring up the Jenkins and NTP services
+- Run the following command to start Jenkins and NTP services:
+
+    ```bash
+    docker-compose up -d
+    ```
+
+### 2.2. Access Jenkins via [http://localhost:8080](http://localhost:8080)
+- After starting the services, open Jenkins by navigating to `http://localhost:8080` in your browser.
+- Follow the instructions to enter the initial admin password (found using `docker logs`).
+
+### 2.3. Complete the Jenkins Setup
+- Install the suggested plugins during Jenkins' initial setup.
+- Set up your admin account.
+
+### 2.4. Verify NTP Service
+- To verify NTP service is working, access the NTP container logs or manually check the synchronized system time:
+
+    ```bash
+    docker logs ntp-service
+    ```
+
+- Ensure the system clock inside the Docker environment is synced to the Moscow timezone.
+
+---
+
+## Step 3: Create a Simple Python Application
+
+### 3.1. Create a Basic Python Application
+- Create a simple Python application with one or two basic functions (e.g., arithmetic operations). Example:
+
+    ```python
+    # app.py
+    def add_numbers(a, b):
+        return a + b
+
+    def subtract_numbers(a, b):
+        return a - b
+    ```
+
+### 3.2. Write Unit Tests
+- Use a Python testing framework like **unittest** or **pytest** to write unit tests for the application. Example:
+
+    ```python
+    # test_app.py
+    import unittest
+    from app import add_numbers, subtract_numbers
+
+    class TestApp(unittest.TestCase):
+        def test_add(self):
+            self.assertEqual(add_numbers(10, 5), 15)
+
+        def test_subtract(self):
+            self.assertEqual(subtract_numbers(10, 5), 5)
+
+    if __name__ == '__main__':
+        unittest.main()
+    ```
+
+### 3.3. Push the Code to a GitHub Repository
+- Ensure that the Python application and the corresponding unit tests are added to a GitHub repository. Jenkins will use this repository for the CI pipeline.
+
+---
+
+## Step 4: Configure a Jenkins Pipeline
+
+### 4.1. Create a New Pipeline Job in Jenkins
+- In Jenkins, create a new **Pipeline Job**:
+    - Go to Jenkins dashboard.
+    - Click on `New Item`.
+    - Select `Pipeline` and give it a name (e.g., "Python CI Pipeline").
+
+### 4.2. Configure the Pipeline to Pull from GitHub
+- In the pipeline configuration, set the **Pipeline Definition** to "Pipeline script from SCM".
+- Choose **Git** as the SCM and provide the URL to your GitHub repository.
+
+### 4.3. Define the Jenkinsfile Pipeline Stages
+- Add a `Jenkinsfile` to the root of your GitHub repository. This file defines the CI stages.
+- In the `Jenkinsfile`, define the pipeline stages using the **Declarative Pipeline** syntax.
+- **Checkout** the code from the GitHub repository.
+- **Install Python** and required dependencies.
+- **Run Unit Tests** using the `unittest` framework.
+- **Build and Deploy** the application (if necessary).
+
+### 4.4. Pipeline Stages Breakdown
+- **Checkout Code**: Pulls the latest code from the GitHub repository.
+- **Install Python and Dependencies**: Installs Python and any required packages from `requirements.txt`.
+- **Run Unit Tests**: Executes the unit tests defined in `app_test.py`.
+- **Build and Deploy**: Builds the application and deploys it to a production environment (if necessary)
+
+
