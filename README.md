@@ -114,35 +114,10 @@ The services are configured to run with the **Moscow timezone (Europe/Moscow)** 
 ## Step 3: Create a Simple Python Application
 
 ### 3.1. Create a Basic Python Application
-- Create a simple Python application with one or two basic functions (e.g., arithmetic operations). Example:
-
-    ```python
-    # app.py
-    def add_numbers(a, b):
-        return a + b
-
-    def subtract_numbers(a, b):
-        return a - b
-    ```
+- Create a simple Python application with one or two basic functions (e.g., arithmetic operations).
 
 ### 3.2. Write Unit Tests
-- Use a Python testing framework like **unittest** or **pytest** to write unit tests for the application. Example:
-
-    ```python
-    # test_app.py
-    import unittest
-    from app import add_numbers, subtract_numbers
-
-    class TestApp(unittest.TestCase):
-        def test_add(self):
-            self.assertEqual(add_numbers(10, 5), 15)
-
-        def test_subtract(self):
-            self.assertEqual(subtract_numbers(10, 5), 5)
-
-    if __name__ == '__main__':
-        unittest.main()
-    ```
+- Use a Python testing framework like **unittest** or **pytest** to write unit tests for the application. 
 
 ### 3.3. Push the Code to a GitHub Repository
 - Ensure that the Python application and the corresponding unit tests are added to a GitHub repository. Jenkins will use this repository for the CI pipeline.
@@ -176,3 +151,63 @@ The services are configured to run with the **Moscow timezone (Europe/Moscow)** 
 - **Build and Deploy**: Builds the application and deploys it to a production environment (if necessary)
 
 
+---
+
+## Step 5: Run the Pipeline and Analyze the Results
+
+### 5.1. Trigger the Pipeline
+- You can trigger the pipeline by:
+  - Pushing code changes to your GitHub repository, which will automatically initiate the pipeline.
+  - Manually running the pipeline from the Jenkins UI:
+    - Navigate to your pipeline job in Jenkins.
+    - Click on the `Build Now` button.
+
+### 5.2. Monitor the Jenkins Logs
+- Monitor the Jenkins logs to ensure the pipeline executes correctly:
+  - Click on the build number in the Jenkins dashboard.
+  - Review the console output for each stage to confirm the correct execution flow.
+
+### 5.3. Analyze the Pipeline Results
+- Once the pipeline completes, check the results:
+  - Ensure that the Python tests are run successfully.
+  - Look for any indicators of success or failure in the Jenkins UI.
+
+### 5.4. Investigate Errors or Test Failures
+- If any errors or test failures occur:
+  - Investigate the logs for detailed error messages.
+  - Make necessary changes to your application code or tests.
+  - Rerun the pipeline after making corrections.
+
+---
+
+## Step 6: Integrate NTP with Jenkins
+
+### 6.1. Verify NTP Synchronization
+- Check that the Jenkins container is synchronizing with the NTP server correctly:
+  - Access the Jenkins container's shell:
+
+    ```bash
+    docker exec -it jenkins-ci /bin/bash
+    ```
+
+  - Use the `ntpq` command to query the NTP server status:
+
+    ```bash
+    ntpq -p
+    ```
+
+### 6.2. Confirm System Time
+- Confirm that the system time inside the Jenkins container matches the actual system time:
+  - Inside the Jenkins container, check the current time:
+
+    ```bash
+    date
+    ```
+
+  - Compare it with the time on your host machine using:
+
+    ```bash
+    date
+    ```
+
+---
