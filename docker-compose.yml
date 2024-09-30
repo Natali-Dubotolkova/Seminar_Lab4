@@ -1,8 +1,9 @@
-version: '3.8'
-
 services:
   jenkins:
-    image: jenkins/jenkins:2.387.2-lts-jdk11  # Specific stable version
+    image: jenkins/jenkins:17-withPython	
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: jenkins-ci
     ports:
       - "8080:8080"  # Jenkins UI
@@ -19,7 +20,7 @@ services:
       resources:
         limits:
           memory: 1g  # Set memory limit
-          cpus: "0.5"  # Limit CPU usage
+          cpus: "2"  # Limit CPU usage
     security_opt:
       - no-new-privileges:true  # Prevent privilege escalation inside the container
 
@@ -36,7 +37,7 @@ services:
       resources:
         limits:
           memory: 128m  # NTP service requires minimal resources
-          cpus: "0.1"
+          cpus: "2"
     security_opt:
       - no-new-privileges:true  # Prevent privilege escalation inside the container
 
