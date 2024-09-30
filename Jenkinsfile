@@ -5,7 +5,12 @@ pipeline {
         stage('Checkout Code') {
             steps {
                 // Clone the code from GitHub
-                git 'https://github.com/yourusername/your-repo-name.git'
+                checkout([$class: 'GitSCM', branches: [[name: ${branch} ]], 
+                          doGenerateSubmoduleConfigurations: false, 
+                          extensions: [[$class: 'RelativeTargetDirectory', 
+                                        relativeTargetDir: '']], 
+                          submoduleCfg: [], 
+                          userRemoteConfigs: [[credentialsId: 'myJenkinsCredentials', url: 'https://github.com/Natali-Dubotolkova/Seminar_Lab4.git' ]] ])
             }
         }
 
