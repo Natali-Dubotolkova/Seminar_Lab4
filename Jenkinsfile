@@ -4,10 +4,12 @@ pipeline {
     stages {
         stage('Checkout Code') {
             steps {
+                script {
                 // Clone the code from GitHub
                 checkout([$class: 'GitSCM', branches: [[name: ${branch} ]], 
                           doGenerateSubmoduleConfigurations: false, 
                           userRemoteConfigs: [[url: 'https://github.com/Natali-Dubotolkova/Seminar_Lab4.git' ]] ])
+                }
             }
         }
 
