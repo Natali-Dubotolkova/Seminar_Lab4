@@ -7,10 +7,7 @@ pipeline {
                 // Clone the code from GitHub
                 checkout([$class: 'GitSCM', branches: [[name: ${branch} ]], 
                           doGenerateSubmoduleConfigurations: false, 
-                          extensions: [[$class: 'RelativeTargetDirectory', 
-                                        relativeTargetDir: '']], 
-                          submoduleCfg: [], 
-                          userRemoteConfigs: [[credentialsId: 'myJenkinsCredentials', url: 'https://github.com/Natali-Dubotolkova/Seminar_Lab4.git' ]] ])
+                          userRemoteConfigs: [[url: 'https://github.com/Natali-Dubotolkova/Seminar_Lab4.git' ]] ])
             }
         }
 
