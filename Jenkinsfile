@@ -7,7 +7,7 @@ pipeline {
                 script {
                 // Clone the code from GitHub
                     echo "Cloning branch: ${branch}"
-                    git branch: "${branch}", url: 'https://github.com/Natali-Dubotolkova/Seminar_Lab4.git'
+                    git branch: "main", url: 'https://github.com/Natali-Dubotolkova/Seminar_Lab4.git'
                 }
             }
         }
