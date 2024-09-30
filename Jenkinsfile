@@ -8,7 +8,7 @@ pipeline {
                 // Clone the code from GitHub
                     cleanWs()
                     echo "Cloning branch: ${branch}"
-                    git branch: "main", url: 'https://github.com/Natali-Dubotolkova/Seminar_Lab4.git'
+                    git branch: "${branch}", url: 'https://github.com/Natali-Dubotolkova/Seminar_Lab4.git'
                 }
             }
         }
@@ -17,8 +17,6 @@ pipeline {
             steps {
                 // Install Python and create a virtual environment
                 sh '''
-                apt-get update
-                apt-get install -y python3 python3-pip
                 python3 -m venv venv
                 . venv/bin/activate
                 pip install -r requirements.txt
