@@ -6,6 +6,7 @@ pipeline {
             steps {
                 script {
                 // Clone the code from GitHub
+                    cleanWs()
                     echo "Cloning branch: ${branch}"
                     git branch: "main", url: 'https://github.com/Natali-Dubotolkova/Seminar_Lab4.git'
                 }
@@ -50,8 +51,12 @@ pipeline {
         always {
             // Remove the virtual environment after execution
             sh '''
-            rm -rf venv
+            rm -rf venv            
             '''
+            cleanWs(cleanWhenNotBuilt: false,
+                    deleteDirs: true,
+                    disableDeferredWipeout: true,
+                    notFailBuild: true)
         }
 
         success {
