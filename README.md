@@ -46,7 +46,7 @@ In this lab, you'll:
 2. **Start the Docker services** using Docker Compose:
 
     ```bash
-    docker-compose up -d
+    docker compose up --build
     ```
 
 3. **Access Jenkins** by visiting:
@@ -91,7 +91,7 @@ The services are configured to run with the **Moscow timezone (Europe/Moscow)** 
 - Run the following command to start Jenkins and NTP services:
 
     ```bash
-    docker-compose up -d
+    docker compose up --build
     ```
 
 ### 2.2. Access Jenkins via [http://localhost:8080](http://localhost:8080)
